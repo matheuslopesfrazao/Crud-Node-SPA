@@ -44,7 +44,7 @@
         function templateLi(id, nome){
             return `
             <li class="list-group-item">${nome}
-                <i class="btn btn-danger delete fa fa-trash" style="float: right; margin-left: 5px;"></i>
+                <i class="btn btn-danger delete fa fa-trash" style="float: right; margin-left: 5px;" data-id="${id}"></i>
             </li>
             `;
             
@@ -89,6 +89,21 @@
 
         function del(element) {
             console.log(element);
+            if (element.target.classList.contains('delete')) {
+                //Qual o id do elemento a excluir?
+                const id = element.target.dataset.id;
+
+                axios.delete(`/delete/${id}`, {name})
+                .then(function (response) {
+                    if (response.status = 200) {
+                        lista.removeChild(element.path[1]);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            }
         }
 
     </script>
