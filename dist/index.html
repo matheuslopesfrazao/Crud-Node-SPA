@@ -91,6 +91,8 @@
 
                 pai.innerHTML = '';
                 pai.appendChild(input);
+                input.addEventListener('keydown', update);
+                input.focus();
             }
         }
 
