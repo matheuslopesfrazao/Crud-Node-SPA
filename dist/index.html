@@ -82,7 +82,7 @@
         }
 
         function edit(element) {
-            if (element.target.classList.contains('update')) {
+            if (element.target.classList.contains('update')) { // Verifica se exite a classe 'update' no item que foi clicado, se sim, entra no if.
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.setAttribute('value','');
@@ -102,7 +102,7 @@
 
         function del(element) {
             console.log(element);
-            if (element.target.classList.contains('delete')) {
+            if (element.target.classList.contains('delete')) {// Verifica se exite a classe 'delete' no item que foi clicado, se sim, entra no if.
                 //Qual o id do elemento a excluir?
                 const id = element.target.dataset.id;
 
