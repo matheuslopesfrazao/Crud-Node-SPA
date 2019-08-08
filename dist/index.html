@@ -42,12 +42,13 @@
             read();
         };
 
-        function templateLi(id, nome){
+        function templateLi(id, nome, element = true){
             return `
-            <li class="list-group-item">${nome}
-                <i class="btn btn-danger delete fa fa-trash" style="float: right; margin-left: 5px;" data-id="${id}"></i>
-                <i class="btn btn-primary update fa fa-wrench" style="float: right;" data-id="${id}"></i>
-            </li>
+                ${element ? `<li class="list-group-item">` : ''} 
+                    ${nome}
+                    <i class="btn btn-danger delete fa fa-trash" style="float: right; margin-left: 5px;" data-id="${id}"></i>
+                    <i class="btn btn-primary update fa fa-wrench" style="float: right;" data-id="${id}"></i>
+                ${element ? `</li>` : ''}
             `;
             
         }
@@ -91,13 +92,27 @@
 
                 pai.innerHTML = '';
                 pai.appendChild(input);
-                input.addEventListener('keydown', update);
-                input.focus();
+                input.addEventListener('keydown', update.bind(pai, id, input)); //Irá ser invocado o evento quando for digitado algo, e irá chamar a função update
+                input.focus(); // Serve para receber os dados sem precisar clicar dentro dele
             }
         }
 
-        function update() {
+        function update(id, input) {
 
+            const x = event.key;
+            if (x == null || x != 'Enter') {
+                return;
+            }
+            
+            axios.put(`/update/${id}`,{name: input.value})
+                .then((response) => {
+                    if (response.status = 200) {
+                        this.innerHTML = templateLi(id, input.value, false);
+                    }
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
         }
 
         function del(element) {
